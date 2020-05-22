@@ -78,9 +78,3 @@ h1 {
   float: right;
   margin-top: 30px;
 }
-
-.game-play {
-  background-color: greenyellow;
-  height: 100%;
-  display: none;
-}
