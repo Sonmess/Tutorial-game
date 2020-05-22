@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <title>Vlastna hra tutorial</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="gamePlay.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
@@ -24,7 +25,46 @@
       </div>
 
       <div id="game-play" class="game-play">
-
+        <table>
+          <thead>
+            <tr>
+              <th>Hráč</th>
+              <th id="time-countdown">Čas</th>
+              <th>Nepriateľ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <img id="player-avatar" src="./img/ironman.png" class="player-image"/>
+              </td>
+              <td>
+                <img id="vs-logo" src="./img/vs-logo.png" width="200" height="150" />
+              </td>
+              <td>
+                <img id="enemy-avatar" src="./img/thanos.png" class="player-image"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="actions-wrapper" id="actions">
+                  <button id="attack-action" class="btn action-btn">Attack</button>
+                </div>
+              </td>
+              <td>
+                <div class="button-wrapper">
+                  <button id="start-game" class="btn start-btn">Start</button>
+                  <button id="stop-game" class="btn stop-btn">Stop</button>
+                </div>
+              </td>
+              <td>
+                <div class="enemy-wrapper">
+                  <span class="status-text" id="enemy-status"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div id="game-end" class="game-end">
