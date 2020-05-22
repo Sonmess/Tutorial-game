@@ -60,6 +60,7 @@ function enemyTurn() {
         height: '300px'
       }, 'slow', () => {
         this.changeStatus('Útočí');
+        this.calculateHealth(true, 20);
         enemyAvatar.finish();
         enemyAvatar.animate({
           left: '-166%'
@@ -106,6 +107,7 @@ function attackAction(avatar) {
         right: '-166%'
       }, 'slow', () => {
         this.changeStatus('Dostáva výprask');
+        this.calculateHealth(false, 5);
         avatar.finish();
         avatar.animate({
           right: '0'
@@ -115,4 +117,23 @@ function attackAction(avatar) {
         });
       });      
   });
+}
+
+function calculateHealth(isPlayer, damage) {
+  let hpWrapper = null;
+  if (isPlayer) {
+    hpWrapper = $('#player-health');
+  } else {
+    hpWrapper = $('#enemy-health');
+  }
+  let hpElement = $(hpWrapper.find('.current-health')[0]);
+  let hpNumber = Number(hpElement.text());
+  let newHp = hpNumber - damage > 0 ? hpNumber - damage : 0;
+  console.log(newHp);
+  hpElement.text(newHp);
+  console.log(hpElement.text());
+  hpWrapper.animate({
+    width: newHp+'%'
+  }, 'slow');
+  return newHp;
 }

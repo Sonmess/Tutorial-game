@@ -41,6 +41,20 @@
     text-align: center;
 }
 
+.game-play .health-bar-wrapper {
+  height: 30px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.game-play .health-bar-wrapper .current-health {
+  background-color: #0cf820;
+  color: black;
+  font-style: italic;
+  line-height: 30px;
+}
+
 .btn {
   display: inline-block;
   padding: 12px;
