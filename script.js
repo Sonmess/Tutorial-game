@@ -1,3 +1,5 @@
+var playerHealth = 100;
+
 $(() => {
   startButton();
   endButton();
@@ -30,7 +32,7 @@ function startGame() {
     startGameBtn.hide();
     stopGameBtn.show();
     vsLogo.hide();
-    this.timeCountDown(10);
+    this.timeCountDown(180);
     this.playerSwitch(true);
   });
 }
@@ -38,7 +40,7 @@ function startGame() {
 function timeCountDown(maxTime) {
   const timeCountdown = $('#time-countdown');
   timeCountdown.text(maxTime);
-  var intervalId = window.setInterval(function() {
+  var intervalId = window.setInterval(function () {
     timeCountdown.text(maxTime);
     maxTime--;
     if (maxTime < 0) {
@@ -49,37 +51,42 @@ function timeCountDown(maxTime) {
 }
 
 function playerTurn() {
-    const playerAvatar = $('#player-avatar');
-    this.attackAction(playerAvatar);
+  const playerAvatar = $('#player-avatar');
+  this.attackAction(playerAvatar);
 }
 
 function enemyTurn() {
   const enemyAvatar = $('#enemy-avatar');
-  window.setTimeout(() => {      
+  enemyAvatar.animate({
+    height: '300px'
+  }, 'slow', () => {
+    this.changeStatus('Útočí');
+    playerHealth = this.calculateHealth(true, 20);
+    enemyAvatar.finish();
+    enemyAvatar.animate({
+      left: '-166%'
+    }, 'slow', () => {
+      enemyAvatar.finish();
+      this.changeStatus('Vracia sa');
       enemyAvatar.animate({
-        height: '300px'
+        left: '0'
       }, 'slow', () => {
-        this.changeStatus('Útočí');
-        this.calculateHealth(true, 20);
-        enemyAvatar.finish();
         enemyAvatar.animate({
-          left: '-166%'
+          height: '200px'
         }, 'slow', () => {
           enemyAvatar.finish();
-          this.changeStatus('Vracia sa');
-          enemyAvatar.animate({
-            left: '0'
-          }, 'slow', () => {    
-            enemyAvatar.animate({
-              height: '200px'
-            }, 'slow', () => {
-              enemyAvatar.finish();
-              this.playerSwitch(true)
-            });
-          });
+          window.setTimeout(() => {
+              if (playerHealth <= 0) {
+                const looseImage = '<img class="lose-img" src="./img/loose.jpg"/>'
+                $('#game-play').html(looseImage);
+              } else {
+                this.playerSwitch(true)
+              }
+          }, 1000);          
         });
       });
-  }, 1000);
+    });
+  });
 }
 
 function playerSwitch(isPlayer) {
@@ -91,7 +98,7 @@ function playerSwitch(isPlayer) {
   } else {
     actions.hide();
     this.changeStatus('Premýšľa');
-    this.enemyTurn();    
+    this.enemyTurn();
   }
 }
 
@@ -103,19 +110,21 @@ function changeStatus(statusText) {
 function attackAction(avatar) {
   const attack = $('#attack-action');
   attack.click(() => {
+    avatar.animate({
+      right: '-166%'
+    }, 'slow', () => {
+      this.changeStatus('Dostáva výprask');
+      this.calculateHealth(false, 5);
+      avatar.finish();
       avatar.animate({
-        right: '-166%'
+        right: '0'
       }, 'slow', () => {
-        this.changeStatus('Dostáva výprask');
-        this.calculateHealth(false, 5);
         avatar.finish();
-        avatar.animate({
-          right: '0'
-        }, 'slow', () => {
-          avatar.finish();
+        window.setTimeout(() => {
           this.playerSwitch(false);
-        });
-      });      
+        }, 1000);
+      });
+    });
   });
 }
 
@@ -129,11 +138,9 @@ function calculateHealth(isPlayer, damage) {
   let hpElement = $(hpWrapper.find('.current-health')[0]);
   let hpNumber = Number(hpElement.text());
   let newHp = hpNumber - damage > 0 ? hpNumber - damage : 0;
-  console.log(newHp);
   hpElement.text(newHp);
-  console.log(hpElement.text());
   hpWrapper.animate({
-    width: newHp+'%'
+    width: newHp + '%'
   }, 'slow');
   return newHp;
 }
