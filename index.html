@@ -10,11 +10,12 @@
   <body>
     <div class="container container-info">
       <h1>Vlastná hra</h1>
-      <p>Ťahová hra na váš vlastný motív.</p>
+      <p>
+        Ťahová hra na váš vlastný motív. Hráč hrá proti počítaču, striedajú sa po jednom ťahu. Vyhráva len ten najlepší :)        
+      </p>
     </div>
 
     <div class="container container-game">
-
       <div id="game-menu" class="game-menu">
         <ul class="menu-list">
           <li id="play-button">Spustiť hru</li>
@@ -24,15 +25,28 @@
       </div>
 
       <div id="game-play" class="game-play">
-
       </div>
 
       <div id="game-end" class="game-end">
         <h2>Dúfam, že sa vám hra páčila, zahrajte sa znova :)</h2>
         <div class="signature">Ing. Matej Boháč</div>
       </div>
-
     </div>
+
     <script src="script.js"></script>
+    <script type="text/javascript">
+      console.log('Ahojko dvojko');
+      var pozdrav = 'Cafes';
+      var Pozdrav = 'Aloha';
+      console.log(pozdrav, Pozdrav);
+      var greetings = pozdrav + Pozdrav;
+      console.log(greetings);
+      function multiplication(parameter1, paramter2) {
+        return parameter1 * paramter2;
+      }
+      var vysledok = multiplication(10, 2);
+      console.log('Vysledok sucinu je ', vysledok);
+      console.log('Vysledok druheho sucinu je ', multiplication(5, 9));
+    </script>
   </body>
 </html>
