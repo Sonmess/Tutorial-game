@@ -11,24 +11,41 @@
     <div class="container container-info">
       <h1>Vlastná hra</h1>
       <p>Ťahová hra na váš vlastný motív.</p>
+      <a class="refresh-btn" href="/"></a>
     </div>
 
     <div class="container container-game">
-
       <div id="game-menu" class="game-menu">
         <ul class="menu-list">
           <li id="play-button">Spustiť hru</li>
-          <li>Nastavenia</li>
+          <li id="options-button">Nastavenia</li>
           <li id="end-button">Ukončiť</li>
         </ul>
       </div>
 
       <div id="game-play" class="game-play">
+        <span class="player-name"></span>
+      </div>
 
+      <div id="game-options" class="game-options">
+        <h2>Vitaj <span class="player-name"></span> v nastaveniach našej hry</h2>
+        <div class="options-wrapper">
+          <div class="row">
+            <label for="options-name">Meno hráča</label>
+            <input type="text" name="options-name" placeholder="Zadajte vaše meno" id="options-name" />
+          </div>
+        </div>
+
+        <div class="tcenter">
+          <span class="back-link" id="options-back">Naspät do menu</span>
+        </div>
       </div>
 
       <div id="game-end" class="game-end">
         <h2>Dúfam, že sa vám hra páčila, zahrajte sa znova :)</h2>
+        <div class="tcenter">
+          <a title="Hrať znova" class="back-link">Hrať znova</a>
+        </div>
         <div class="signature">Ing. Matej Boháč</div>
       </div>
 

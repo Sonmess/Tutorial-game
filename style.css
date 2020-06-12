@@ -16,6 +16,35 @@ h1 {
   line-height: 40px;
 }
 
+.refresh-btn {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  background-image: url("img/refresh.png");
+  background-size: cover;
+  background-repeat: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.refresh-btn:hover {
+  transform: rotate(360deg);
+}
+
+.tcenter {
+  text-align: center;
+}
+
+.back-link {
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 10px;
+  color: black;
+  font-size: 14px;
+  display: inline-block;
+}
+
 .container {
   max-width: 1240px;
   margin: 30px auto;
@@ -60,6 +89,43 @@ h1 {
   background-color: brown;
 }
 
+.game-options {
+  height: 100%;
+  background-color: burlywood;
+  border: 1px solid black;
+  position: relative;
+  display: none;
+}
+
+.game-options h2 {
+  text-align: center;
+  margin: 60px 0 20px;
+  font-style: initial;
+}
+
+.game-options .options-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.game-options .options-wrapper .row {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.game-options .options-wrapper .row label {
+  display: block;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.game-options .options-wrapper .row input {
+  padding: 6px 12px;
+  border: 2px solid black;
+}
+
 .game-end {
   height: 100%;
   background-color: skyblue;
@@ -83,4 +149,32 @@ h1 {
   background-color: greenyellow;
   height: 100%;
   display: none;
+}
+
+.btn {
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn.again-btn {
+  margin: 20px 0;
+}
+
+.btn.again-btn:hover {
+  background-color: darkblue;
+  color: white;
+  border: 1px solid white;
 }
