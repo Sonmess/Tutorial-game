@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Vlastna hra tutorial</title>
+    <title>Matejova bojovka</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
     <div class="container container-info">
-      <h1>Vlastná hra</h1>
+      <h1>Matejova bojova hra</h1>
       <p>
         Ťahová hra na váš vlastný motív. Hráč hrá proti počítaču, striedajú sa po jednom ťahu. Vyhráva len ten najlepší :)        
       </p>
@@ -19,7 +19,7 @@
       <div id="game-menu" class="game-menu">
         <ul class="menu-list">
           <li id="play-button">Spustiť hru</li>
-          <li>Nastavenia</li>
+          <li id="options-button">Nastavenia</li>
           <li id="end-button">Ukončiť</li>
         </ul>
       </div>
@@ -34,5 +34,41 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      /*alert("Ahojky ja som javascript");*/
+      console.log(7+10);
+      var mojaPrvaPremenna = 'Matej Bohac';
+      console.log(mojaPrvaPremenna);
+      var titul = 'Ing';
+      var prezyvka = 'Mess';
+      console.log(titul + ' ' + prezyvka, mojaPrvaPremenna);
+
+      function rozdiel(a, b) {
+        return a-b;
+      }
+      console.log(rozdiel(10, 4));
+
+      function somPodmienka(vyraz) {
+        /*
+        if (vyraz < 10)
+        if (vyraz)
+        if (vyraz > 10 || vyraz < 100)
+        */
+        if (vyraz > 10 && vyraz < 100) {
+          console.log('Vyraz je vacsi ako 10');
+        } else {
+          console.log('Vyraz je mensi alebo rovny ako 10');
+        }
+      }
+      somPodmienka(100);
+      function somTextovaPodmienka(text) {
+        if (text != 'Matej') {
+          console.log('Hura');
+        } else {
+          console.log('Smola');
+        }
+      }
+      somTextovaPodmienka('Matej');
+    </script>
   </body>
 </html>

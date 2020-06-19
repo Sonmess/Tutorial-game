@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
   startButton();
   endButton();
 });
@@ -10,11 +10,6 @@ function endButton() {
     gameMenu.hide();
     gameEnd.show();
   });
-
-  /*gameMenu.find('#end-button').click(function() {
-    gameMenu.hide();
-    gameEnd.show();
-  });*/
 }
 
 function startButton() {
@@ -24,16 +19,16 @@ function startButton() {
     gameMenu.hide();
     gamePlay.show();
   });
+}
 
-  //porovnanie javascript a jquery
-  function info() {
-    var gameMenu = $('#game-menu'); //jquery
-    var gameMenu2 = document.getElementById('game-menu'); //javascript
-    gameMenu.click(() => {
-      //nieco co sa ma vykonat toto je JQUERY
-    });
-    gameMenu2.addEventListener('click', function() {
-      //nieco co sa ma vykonat, toto je cisty javascript
-    });
-  }
+//porovnanie javascript a jquery
+function info() {
+  var gameMenu = $('#game-menu'); //jquery
+  var gameMenu2 = document.getElementById('game-menu'); //javascript
+  gameMenu.click(() => {
+    //nieco co sa ma vykonat toto je JQUERY
+  });
+  gameMenu2.addEventListener('click', function () {
+    //nieco co sa ma vykonat, toto je cisty javascript
+  });
 }
