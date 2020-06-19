@@ -1,9 +1,9 @@
 var playerHealth = 100;
+var enemyHealth = 100;
+var timeIntervalId = '';
 
-$(() => {
-  startButton();
-  endButton();
-})
+startButton();
+endButton();
 
 function endButton() {
   let gameMenu = $('#game-menu');
@@ -20,7 +20,8 @@ function startButton() {
   gameMenu.find('#play-button').click(() => {
     gameMenu.hide();
     gamePlay.show();
-    this.startGame();
+    startGame();
+    stopGame();
   })
 }
 
@@ -32,42 +33,92 @@ function startGame() {
     startGameBtn.hide();
     stopGameBtn.show();
     vsLogo.hide();
-    this.timeCountDown(180);
-    this.playerSwitch(true);
+    timeCountDown(180);
+    playerSwitch(false);
+  });
+}
+
+function stopGame() {
+  const startGameBtn = $('#start-game');
+  const stopGameBtn = $('#stop-game');
+  const vsLogo = $('#vs-logo');
+  stopGameBtn.click(() => {
+    startGameBtn.show();
+    stopGameBtn.hide();
+    vsLogo.show();
+    resetGame();
   });
 }
 
 function timeCountDown(maxTime) {
   const timeCountdown = $('#time-countdown');
   timeCountdown.text(maxTime);
-  var intervalId = window.setInterval(function () {
+  timeIntervalId = window.setInterval(function () {
     timeCountdown.text(maxTime);
     maxTime--;
-    if (maxTime < 0) {
-      window.clearInterval(intervalId);
+    if (maxTime <= 0) {
+      window.clearInterval(timeIntervalId);
       //ked cas vyprsal mal by nastat koniec hry
     }
   }, 1000)
 }
 
-function playerTurn() {
-  const playerAvatar = $('#player-avatar');
-  this.attackAction(playerAvatar);
+function clearTimeCountDown() {
+  const timeCountdown = $('#time-countdown');
+  timeCountdown.text('Cas');
+  window.clearInterval(timeIntervalId);
 }
 
-function enemyTurn() {
+function resetGame() {
+  clearTimeCountDown();
+  playerHealth = $('#player-health');
+  playerHealth.css('width', '100%');
+  $(playerHealth.find('.current-health')[0]).text(100);
+  enemyHealth = $('#enemy-health');
+  enemyHealth.css('width', '100%');
+  $(enemyHealth.find('.current-health')[0]).text(100);
+  changeStatus('');
+  const actions = $('#actions');
+  actions.hide();
+}
+
+function playerTurn() {
+  console.log('Hrac');
+  const attack = $('#attack-action');
+  attack.off().click(() => {
+    attackAction(attack);
+  });
+}
+
+async function attackAction(attack) {
+    attack.parent().hide();    
+    
+    changeStatus('Dostava vyprask');
+    playerMove();
+    await sleep(2000);
+    playerSwitch(true);
+}
+
+async function enemyTurn() {
+  console.log('nepriatel');
+  await enemyMove();
+  await sleep(2000);
+  playerSwitch(false);
+}
+
+async function enemyMove() {
   const enemyAvatar = $('#enemy-avatar');
   enemyAvatar.animate({
     height: '300px'
   }, 'slow', () => {
-    this.changeStatus('Útočí');
-    playerHealth = this.calculateHealth(true, 20);
+    changeStatus('Útočí');
     enemyAvatar.finish();
     enemyAvatar.animate({
-      left: '-166%'
+      left: '-166%',
     }, 'slow', () => {
+      var health = calculateHealth(false, 20);
       enemyAvatar.finish();
-      this.changeStatus('Vracia sa');
+      changeStatus('Vracia sa');
       enemyAvatar.animate({
         left: '0'
       }, 'slow', () => {
@@ -75,30 +126,47 @@ function enemyTurn() {
           height: '200px'
         }, 'slow', () => {
           enemyAvatar.finish();
-          window.setTimeout(() => {
-              if (playerHealth <= 0) {
-                const looseImage = '<img class="lose-img" src="./img/loose.jpg"/>'
-                $('#game-play').html(looseImage);
-              } else {
-                this.playerSwitch(true)
-              }
-          }, 1000);          
+            if (health == 0) {
+              alert('Koniec hry, prehrali ste !!');
+            }
         });
       });
     });
   });
 }
 
+async function playerMove() {
+  const playerAvatar = $('#player-avatar');
+  playerAvatar.animate({
+    left: '166%'
+  }, 'slow', () => {
+    playerAvatar.finish();
+    var health = calculateHealth(true, 10);
+    playerAvatar.animate({
+      left: '0'
+    }, 'slow', () => {
+      playerAvatar.finish();
+        if (health == 0) {
+          alert('Koniec hry, vyhrali ste');
+        }
+    });
+  });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function playerSwitch(isPlayer) {
   const actions = $('#actions');
-  if (isPlayer) {
+  if (!isPlayer) {
     actions.show();
-    this.changeStatus('Čaká na výprask');
-    this.playerTurn();
+    changeStatus('Čaká na výprask');
+    playerTurn();
   } else {
     actions.hide();
-    this.changeStatus('Premýšľa');
-    this.enemyTurn();
+    changeStatus('Premýšľa');
+    enemyTurn();
   }
 }
 
@@ -107,30 +175,9 @@ function changeStatus(statusText) {
   status.text(statusText);
 }
 
-function attackAction(avatar) {
-  const attack = $('#attack-action');
-  attack.click(() => {
-    avatar.animate({
-      right: '-166%'
-    }, 'slow', () => {
-      this.changeStatus('Dostáva výprask');
-      this.calculateHealth(false, 5);
-      avatar.finish();
-      avatar.animate({
-        right: '0'
-      }, 'slow', () => {
-        avatar.finish();
-        window.setTimeout(() => {
-          this.playerSwitch(false);
-        }, 1000);
-      });
-    });
-  });
-}
-
 function calculateHealth(isPlayer, damage) {
   let hpWrapper = null;
-  if (isPlayer) {
+  if (!isPlayer) {
     hpWrapper = $('#player-health');
   } else {
     hpWrapper = $('#enemy-health');
@@ -138,6 +185,7 @@ function calculateHealth(isPlayer, damage) {
   let hpElement = $(hpWrapper.find('.current-health')[0]);
   let hpNumber = Number(hpElement.text());
   let newHp = hpNumber - damage > 0 ? hpNumber - damage : 0;
+  console.log(newHp, isPlayer);
   hpElement.text(newHp);
   hpWrapper.animate({
     width: newHp + '%'
